@@ -1,0 +1,274 @@
+ADMIN APP FILES
+================
+1.__init__.py:this is an empty which represents django project related to python
+2.asgi.py-asynchronus server gateway interface
+3.wsgi.py-websever gate way interface
+4.settings.py - Here we are doing all configurations
+5. urls.py    - which contains all urls regarding django project
+
+
+USER APP FILES
+================
+
+1.admin.py-we are using this file when we are interaction with djago admin
+2.apps.py-it consits information about user apps
+3.model.py-used to create database tables
+4.test.py-used to test our application
+5.views.py-here we creating functions
+
+
+about path function
+===================
+	it consits of three parameters
+	path(p1,p2,p3)
+	p1: url name('hello/')
+	p2: function(views.function_name)
+	p3: name = hello
+
+refernce address
+================
+http://127.0.0.1:8000/
+http://localhost:8000/
+
+static URL mapping 
+====================
+navigation path :: urls --> views
+				   views --> urls
+				   syntax : locahost:8000/url_name
+				  		   path('url_name/',views.fun_name,name='url_name'),
+Dyna,in URL mapping 
+====================
+navigation path :: urls --> views
+				   views --> urls
+				  syntax : locahost:8000/url_name/value
+				  		   path('url_name/<data_type : var_name_value>/<data_type2:var_name>',views.fun_name,name='url_name')
+
+
+
+
+Day - 2:
+========
+-Templates
+-Static file handling
+-Online and offline Bootstrap
+
+Templates:
+==========
+- a folder that contains all .html files with regards to the project
+- Navigation path:
+	-urls --> views --> templates
+	templates <-- views <-- urls
+-Step1: create a folder with name "templates" inside user app(here Myapp)
+-Step2: create another folder with a name same as userapp(not mandate, just to avoid confusion)
+	{
+	 here we created a folder named "ht" we can go with just anything
+	 there we create a html file and create a path for it in the urls.py tab and define a function accordingly in views.py
+	}
+-Step3: templates --> folder --> .html files
+
+- render function:: Which is used to get the .html files 
+					Syntax: render(request, 'filelocation')
+
+
+-inline css
+	-Here we are adding CSS only for single HTML tag
+-internal css
+	-We reuse styling for all the mentioned tags
+-external css
+
+--Static File Handling
+=======================
+- Through this SFH we add all .css files, .js files and images to our project
+- Step1: we have to create folder with name static which is inside user app
+- Step2: Create a folder inside static folder with name "css"
+- Step3: Create another folder inside static folder with name "js"
+- Step4: Create another folder inside static folder with name "images"
+
+Bootstrap:
+===========
+Get started with Bootstrap, the world’s most popular framework for building responsive, mobile-first sites, with jsDelivr and a template starter page.
+
+website:
+get bootstrap.com
+
+DAY - 3
+=========
+Offline bootstrap
+
+====================================
+--Django admin
+	to login to admin we have to use superuser
+		--url http://127.0.0.1/admin/
+	--firstly we have create superuser
+		--python manage.py createsuperuser
+superuser details
+--------------------
+lakshmisahithi
+Sahithi@0
+
+If we are unable to access the database run the below commands 
+	--python manage.py makemigrations
+	--python manage.py migrate
+	--python managr.py runserver
+=====================================
+
+Model creation
+==================
+	model:db connections means database creation
+	-each class representations a table in db
+	-by using classes we can create db
+		class classname-->db name
+										db fields-->(data type(int,char,var char
+										also we will mention--))
+
+	database:
+	-------------
+		-collection of data
+		-https://sqlitebrowser.org/dl/
+			Student
+				-name
+				-rollnum
+				-age
+				-mobile
+				-email
+				-address
+
+		-Django Input fields
+			-CharField
+			-IntegerField
+			-EmailField
+			-TextField
+			-ImageField
+
+		class Student(models.Model):
+			name=models.CharFiled(max_length=20)
+			rollnum=models.charField(max_length=30)
+			age=models.IntegerField()
+			mobile=models.IntegerField()
+			email=models.EmailField(max_length=30)
+			address=models.TextField(max_length=70)
+
+
+			def __str__(self):
+				return self.name+' '+self.email
+
+CRUD operations:
+-----------------
+C-create a db
+R-retrive a db
+U-update a db
+D-delete a db
+     3ways:
+     ------------
+     	-OBM queries(Object Relational Mapping)
+     	-Html pages
+     	-Forms
+
+OBM(object relational mapping):
+-----------------------------
+
+Create a DB
+--------------
+	-OBM Queries
+		-python shell
+			-python manage.py shell
+					-from Myapp.models imoprt Student(user app nunchi class import cheyali)
+For insert database
+----------------------
+	-1.-save():
+	-----------
+			obj=modelname(field='value',field='value'.....fn='vn')
+			obj.save()
+			obj
+ex
+ obj=Student(name='sahithi',rollnum='58',age='20',mobile='9390412131',email='sahithi2539@gmail.com',address='KTV')
+ obj.save()
+ obj()
+
+
+For retrive a db
+---------------------
+	-if you want to retive entire database from db
+	   ob=modelname.objects.all()
+	   ob
+	-if you want retrive only column data
+		for i in ob:
+			print(i.name)
+	-if you want to retrive only first record
+		modelname.objects.first()
+	-if you want to retrive only last record
+		modelname.objects.last()
+				-if you return in list format
+							ob=Student.objects.value_list()
+							ob
+
+	-slicing: [start range:end range+1:steps]
+	--------------------------------------------
+		-modelname.objects.all()[:4]
+		-modelname.objects.all()[::-1]
+		-modelname.objects.all()[::2]
+
+	- if you want to retrive specific record
+		-get(id=number)-----union records
+		-data=modelname.ojects.get(id=2)data
+
+	-if you want to retrive a specific record
+		-get(id-number)--unique records
+		-data=modelname.objects.get(id=2)
+
+	-if you want to retrive multiple record
+		-filter(fieldname=value)-->even duplicate data will be printed here
+		-data = modelname.objects.filter(age='23')
+		 data
+
+U-update a db
+-----------------
+ 	-if you want to update specific record
+ 		-d=modelname.objects.get(id=2)
+ 		-d
+ 		-d.age=30
+ 		-d.save()
+
+ 	-if you want to update specific column for all user
+ 		-obj=modelname.objects.all().update.(age=30)
+ 		obj
+ 		-obj=modelname.objects.filter().update.(address='kkd')
+ 		obj
+
+ D-delete a db
+ -------------------
+ 	-if you want to delete all records
+    	obj=modelname.objects.get(id=3)
+    	obj
+    	obj.delete()
+
+    		-if you want to delete all records
+    			info=modelname.objectd.all.delete()
+    			info
+
+
+
+DAY - 4
+==================================================
+
+HTML pages:
+---------------------
+	generations:url->views->templates
+	through html pages:::
+	url-> views->templates->views->mmodels
+
+	CRUD operrations using templates:
+		1.create
+		2.retrive
+		3.update
+		4.delete
+		
+	path('html_page/',views.name,name='html_page')
+	path('register/',views.register,name='register')
+	
+for importing data to html
+----------------------------
+views.py has
+from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from Myapp.models import Student
